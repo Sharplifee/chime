@@ -7,12 +7,22 @@ on:
 
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - uses: actions/checkout@v4
 
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_26.app || xcodebuild -version
+      - name: Show available Xcodes and SDKs
+        run: |
+          ls -1 /Applications | grep -i '^Xcode' || true
+          xcodebuild -version
+          xcodebuild -showsdks | sed -n '1,60p'
+
+      - name: Select newest Xcode
+        run: |
+          NEWEST=$(ls -d /Applications/Xcode*.app | sort -V | tail -1)
+          echo "Using $NEWEST"
+          sudo xcode-select -s "$NEWEST"
+          xcodebuild -version
 
       - name: Install XcodeGen
         run: brew install xcodegen
@@ -20,10 +30,14 @@ jobs:
       - name: Generate project
         run: xcodegen generate
 
-      - name: Build (unsigned syntax check)
+      - name: List schemes
+        run: xcodebuild -list -project Chime.xcodeproj
+
+      - name: Build iOS (unsigned)
         run: |
+          set -o pipefail
           xcodebuild -project Chime.xcodeproj \
             -scheme Chime \
             -destination 'generic/platform=iOS' \
             CODE_SIGNING_ALLOWED=NO \
-            build
+            build 2>&1 | tail -80

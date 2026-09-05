@@ -23,6 +23,9 @@ targets:
     dependencies:
       - target: ChimeWatch
         embed: true
+        copy:
+          destination: productsDirectory
+          subpath: "$(CONTENTS_FOLDER_PATH)/Watch"
       - target: ChimeWidgets
         embed: true
     settings:
@@ -45,7 +48,7 @@ targets:
         INFOPLIST_KEY_NSExtensionPointIdentifier: com.apple.widgetkit-extension
 
   ChimeWatch:
-    type: application.watchapp
+    type: application
     platform: watchOS
     sources: [Watch, Shared]
     settings:
