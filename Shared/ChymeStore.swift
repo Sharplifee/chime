@@ -1,12 +1,12 @@
 import Foundation
 
-/// Shared persistence via App Group so the widget/complication extension and the
-/// app read the same alarms and timers.
+/// Per-target persistence for alarms, timers and defaults.
 public struct ChymeStore {
-    public static let appGroup = "group.com.connor.chyme"
+    // No App Group: each target keeps its own defaults. The complication opens the
+    // Crown picker rather than reading shared state, so nothing needs to cross.
 
     private var defaults: UserDefaults {
-        UserDefaults(suiteName: Self.appGroup) ?? .standard
+        .standard
     }
 
     public init() {}

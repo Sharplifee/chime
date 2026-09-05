@@ -14,6 +14,7 @@ settings:
     MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
     GENERATE_INFOPLIST_FILE: NO
+    CODE_SIGN_STYLE: Manual
 
 targets:
   Chyme:
@@ -30,10 +31,6 @@ targets:
         NSSupportsLiveActivities: true
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: true
-    entitlements:
-      path: Config/Chyme.entitlements
-      properties:
-        com.apple.security.application-groups: [group.com.connor.chyme]
     dependencies:
       - target: ChymeWidgets
         embed: true
@@ -42,6 +39,8 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.connor.chyme
+        PROVISIONING_PROFILE_SPECIFIER: Chyme CI
+        CODE_SIGN_IDENTITY: Apple Distribution
 
   ChymeWidgets:
     type: app-extension
@@ -53,13 +52,11 @@ targets:
         CFBundleDisplayName: Chyme
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
-    entitlements:
-      path: Config/ChymeWidgets.entitlements
-      properties:
-        com.apple.security.application-groups: [group.com.connor.chyme]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.connor.chyme.widgets
+        PROVISIONING_PROFILE_SPECIFIER: Chyme Widgets CI
+        CODE_SIGN_IDENTITY: Apple Distribution
 
   ChymeWatch:
     type: application
@@ -72,16 +69,14 @@ targets:
         WKApplication: true
         WKCompanionAppBundleIdentifier: com.connor.chyme
         WKRunsIndependentlyOfCompanionApp: true
-    entitlements:
-      path: Config/ChymeWatch.entitlements
-      properties:
-        com.apple.security.application-groups: [group.com.connor.chyme]
     dependencies:
       - target: ChymeWatchWidgets
         embed: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.connor.chyme.watchkitapp
+        PROVISIONING_PROFILE_SPECIFIER: Chyme Watch CI
+        CODE_SIGN_IDENTITY: Apple Distribution
 
   ChymeWatchWidgets:
     type: app-extension
@@ -93,10 +88,8 @@ targets:
         CFBundleDisplayName: Chyme
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
-    entitlements:
-      path: Config/ChymeWatchWidgets.entitlements
-      properties:
-        com.apple.security.application-groups: [group.com.connor.chyme]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.connor.chyme.watchkitapp.widgets
+        PROVISIONING_PROFILE_SPECIFIER: Chyme Watch Widgets CI
+        CODE_SIGN_IDENTITY: Apple Distribution
