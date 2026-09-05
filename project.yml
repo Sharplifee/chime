@@ -5,6 +5,7 @@ options:
     iOS: "26.0"
     watchOS: "26.0"
   createIntermediateGroups: true
+  generateEmptyDirectories: true
 
 settings:
   base:
@@ -12,7 +13,7 @@ settings:
     SWIFT_VERSION: "6.0"
     MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
-    CODE_SIGN_STYLE: Manual
+    GENERATE_INFOPLIST_FILE: NO
 
 targets:
   Chime:
@@ -20,56 +21,82 @@ targets:
     platform: iOS
     supportedDestinations: [iOS, macCatalyst]
     sources: [App, Shared, Engine, Connect, Alarm]
+    info:
+      path: Config/Chime-Info.plist
+      properties:
+        CFBundleDisplayName: Chime
+        UILaunchScreen: {}
+        NSAlarmKitUsageDescription: "Chime schedules your alarms and timers so they ring reliably and stop on their own."
+        NSSupportsLiveActivities: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: true
+    entitlements:
+      path: Config/Chime.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.connor.chime]
     dependencies:
-      - target: ChimeWatch
-        embed: true
-        copy:
-          destination: productsDirectory
-          subpath: "$(CONTENTS_FOLDER_PATH)/Watch"
       - target: ChimeWidgets
+        embed: true
+      - target: ChimeWatch
         embed: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime
-        INFOPLIST_KEY_NSSupportsLiveActivities: YES
-        INFOPLIST_KEY_NSAlarmKitUsageDescription: "Chime schedules your alarms and timers so they ring reliably and stop on their own."
-        INFOPLIST_KEY_UILaunchScreen_Generation: YES
-        CODE_SIGN_ENTITLEMENTS: Config/Chime.entitlements
-        PROVISIONING_PROFILE_SPECIFIER: Chime AppStore
 
   ChimeWidgets:
     type: app-extension
     platform: iOS
     sources: [Widgets, Shared, Alarm]
+    info:
+      path: Config/ChimeWidgets-Info.plist
+      properties:
+        CFBundleDisplayName: Chime
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Config/ChimeWidgets.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.connor.chime]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.widgets
-        CODE_SIGN_ENTITLEMENTS: Config/ChimeWidgets.entitlements
-        PROVISIONING_PROFILE_SPECIFIER: Chime Widgets AppStore
-        INFOPLIST_KEY_NSExtensionPointIdentifier: com.apple.widgetkit-extension
-        INFOPLIST_KEY_NSSupportsLiveActivities: YES
-
-  ChimeWatchWidgets:
-    type: app-extension
-    platform: watchOS
-    sources: [WatchWidgets, Shared]
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.watchkitapp.widgets
-        CODE_SIGN_ENTITLEMENTS: Config/ChimeWatchWidgets.entitlements
-        PROVISIONING_PROFILE_SPECIFIER: Chime Watch Widgets AppStore
-        INFOPLIST_KEY_NSExtensionPointIdentifier: com.apple.widgetkit-extension
 
   ChimeWatch:
     type: application
     platform: watchOS
     sources: [Watch, Shared, Connect]
+    info:
+      path: Config/ChimeWatch-Info.plist
+      properties:
+        CFBundleDisplayName: Chime
+        WKApplication: true
+        WKCompanionAppBundleIdentifier: com.connor.chime
+        WKRunsIndependentlyOfCompanionApp: true
+    entitlements:
+      path: Config/ChimeWatch.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.connor.chime]
     dependencies:
       - target: ChimeWatchWidgets
         embed: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.watchkitapp
-        CODE_SIGN_ENTITLEMENTS: Config/ChimeWatch.entitlements
-        PROVISIONING_PROFILE_SPECIFIER: Chime Watch AppStore
-        INFOPLIST_KEY_WKCompanionAppBundleIdentifier: com.connor.chime
+
+  ChimeWatchWidgets:
+    type: app-extension
+    platform: watchOS
+    sources: [WatchWidgets, Shared]
+    info:
+      path: Config/ChimeWatchWidgets-Info.plist
+      properties:
+        CFBundleDisplayName: Chime
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    entitlements:
+      path: Config/ChimeWatchWidgets.entitlements
+      properties:
+        com.apple.security.application-groups: [group.com.connor.chime]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.watchkitapp.widgets
