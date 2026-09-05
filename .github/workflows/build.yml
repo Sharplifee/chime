@@ -1,4 +1,4 @@
-name: Build Chime
+name: Build Chyme
 
 on:
   workflow_dispatch:
@@ -31,13 +31,13 @@ jobs:
         run: xcodegen generate
 
       - name: List schemes
-        run: xcodebuild -list -project Chime.xcodeproj
+        run: xcodebuild -list -project Chyme.xcodeproj
 
       - name: Build iOS (unsigned)
         run: |
           set -o pipefail
-          xcodebuild -project Chime.xcodeproj \
-            -scheme Chime \
+          xcodebuild -project Chyme.xcodeproj \
+            -scheme Chyme \
             -destination 'generic/platform=iOS' \
             CODE_SIGNING_ALLOWED=NO \
             build 2>&1 | tee /tmp/build.log | grep -E "error:|warning:|BUILD" || true

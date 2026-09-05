@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct ChimeWatchApp: App {
+struct ChymeWatchApp: App {
     var body: some Scene {
         WindowGroup {
             WatchRootView()

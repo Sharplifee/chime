@@ -1,4 +1,4 @@
-name: Chime
+name: Chyme
 options:
   bundleIdPrefix: com.connor
   deploymentTarget:
@@ -16,87 +16,87 @@ settings:
     GENERATE_INFOPLIST_FILE: NO
 
 targets:
-  Chime:
+  Chyme:
     type: application
     platform: iOS
     supportedDestinations: [iOS, macCatalyst]
     sources: [App, Shared, Engine, Connect, Alarm]
     info:
-      path: Config/Chime-Info.plist
+      path: Config/Chyme-Info.plist
       properties:
-        CFBundleDisplayName: Chime
+        CFBundleDisplayName: Chyme
         UILaunchScreen: {}
-        NSAlarmKitUsageDescription: "Chime schedules your alarms and timers so they ring reliably and stop on their own."
+        NSAlarmKitUsageDescription: "Chyme schedules your alarms and timers so they ring reliably and stop on their own."
         NSSupportsLiveActivities: true
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: true
     entitlements:
-      path: Config/Chime.entitlements
+      path: Config/Chyme.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.connor.chime]
+        com.apple.security.application-groups: [group.com.connor.chyme]
     dependencies:
-      - target: ChimeWidgets
+      - target: ChymeWidgets
         embed: true
-      - target: ChimeWatch
+      - target: ChymeWatch
         embed: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime
+        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chyme
 
-  ChimeWidgets:
+  ChymeWidgets:
     type: app-extension
     platform: iOS
     sources: [Widgets, Shared, Alarm]
     info:
-      path: Config/ChimeWidgets-Info.plist
+      path: Config/ChymeWidgets-Info.plist
       properties:
-        CFBundleDisplayName: Chime
+        CFBundleDisplayName: Chyme
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
-      path: Config/ChimeWidgets.entitlements
+      path: Config/ChymeWidgets.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.connor.chime]
+        com.apple.security.application-groups: [group.com.connor.chyme]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.widgets
+        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chyme.widgets
 
-  ChimeWatch:
+  ChymeWatch:
     type: application
     platform: watchOS
     sources: [Watch, Shared, Connect]
     info:
-      path: Config/ChimeWatch-Info.plist
+      path: Config/ChymeWatch-Info.plist
       properties:
-        CFBundleDisplayName: Chime
+        CFBundleDisplayName: Chyme
         WKApplication: true
-        WKCompanionAppBundleIdentifier: com.connor.chime
+        WKCompanionAppBundleIdentifier: com.connor.chyme
         WKRunsIndependentlyOfCompanionApp: true
     entitlements:
-      path: Config/ChimeWatch.entitlements
+      path: Config/ChymeWatch.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.connor.chime]
+        com.apple.security.application-groups: [group.com.connor.chyme]
     dependencies:
-      - target: ChimeWatchWidgets
+      - target: ChymeWatchWidgets
         embed: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.watchkitapp
+        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chyme.watchkitapp
 
-  ChimeWatchWidgets:
+  ChymeWatchWidgets:
     type: app-extension
     platform: watchOS
     sources: [WatchWidgets, Shared]
     info:
-      path: Config/ChimeWatchWidgets-Info.plist
+      path: Config/ChymeWatchWidgets-Info.plist
       properties:
-        CFBundleDisplayName: Chime
+        CFBundleDisplayName: Chyme
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     entitlements:
-      path: Config/ChimeWatchWidgets.entitlements
+      path: Config/ChymeWatchWidgets.entitlements
       properties:
-        com.apple.security.application-groups: [group.com.connor.chime]
+        com.apple.security.application-groups: [group.com.connor.chyme]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.watchkitapp.widgets
+        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chyme.watchkitapp.widgets

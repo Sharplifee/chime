@@ -1,7 +1,7 @@
 import Foundation
 
 /// How long a ringing alarm or timer is allowed to sound before it stops itself.
-/// This is the whole point of Chime: nothing rings forever.
+/// This is the whole point of Chyme: nothing rings forever.
 public struct AutoDismiss: Codable, Hashable, Sendable {
     public var seconds: Int
 
@@ -29,7 +29,7 @@ public struct AutoDismiss: Codable, Hashable, Sendable {
     ]
 }
 
-public struct ChimeAlarm: Codable, Identifiable, Hashable, Sendable {
+public struct ChymeAlarm: Codable, Identifiable, Hashable, Sendable {
     public var id: UUID
     public var label: String
     /// Minutes since midnight, local time.
@@ -63,7 +63,7 @@ public struct ChimeAlarm: Codable, Identifiable, Hashable, Sendable {
     public var minute: Int { minuteOfDay % 60 }
 }
 
-public struct ChimeTimer: Codable, Identifiable, Hashable, Sendable {
+public struct ChymeTimer: Codable, Identifiable, Hashable, Sendable {
     public var id: UUID
     public var label: String
     public var duration: TimeInterval

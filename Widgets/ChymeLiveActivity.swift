@@ -6,9 +6,9 @@ import AlarmKit
 /// AlarmKit renders its countdown and alerting UI through a Live Activity that
 /// must live in a widget extension. Without this the alarm has nowhere to draw
 /// on the Lock Screen or in the Dynamic Island.
-struct ChimeAlarmLiveActivity: Widget {
+struct ChymeAlarmLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: AlarmAttributes<ChimeMetadata>.self) { context in
+        ActivityConfiguration(for: AlarmAttributes<ChymeMetadata>.self) { context in
             HStack {
                 Image(systemName: "alarm.fill")
                     .foregroundStyle(context.attributes.tintColor)
@@ -41,9 +41,9 @@ struct ChimeAlarmLiveActivity: Widget {
 }
 
 @main
-struct ChimeWidgetBundle: WidgetBundle {
+struct ChymeWidgetBundle: WidgetBundle {
     var body: some Widget {
-        ChimeAlarmLiveActivity()
+        ChymeAlarmLiveActivity()
     }
 }
 #endif

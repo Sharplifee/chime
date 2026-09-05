@@ -11,11 +11,11 @@ public final class AlarmEngine: ObservableObject {
 
     public static let shared = AlarmEngine()
 
-    @Published public private(set) var alarms: [ChimeAlarm] = []
-    @Published public private(set) var timers: [ChimeTimer] = []
+    @Published public private(set) var alarms: [ChymeAlarm] = []
+    @Published public private(set) var timers: [ChymeTimer] = []
 
     private var autoDismissWork: [UUID: Task<Void, Never>] = [:]
-    private let store = ChimeStore()
+    private let store = ChymeStore()
 
     private init() {
         alarms = store.loadAlarms()
@@ -46,7 +46,7 @@ public final class AlarmEngine: ObservableObject {
 
     // MARK: - Alarms
 
-    public func upsert(_ alarm: ChimeAlarm) async {
+    public func upsert(_ alarm: ChymeAlarm) async {
         if let i = alarms.firstIndex(where: { $0.id == alarm.id }) {
             alarms[i] = alarm
         } else {
@@ -81,9 +81,9 @@ public final class AlarmEngine: ObservableObject {
     @discardableResult
     public func startTimer(duration: TimeInterval,
                            autoDismiss: AutoDismiss = .fiveMinutes,
-                           label: String = "Timer") async -> ChimeTimer? {
+                           label: String = "Timer") async -> ChymeTimer? {
         guard await ensureAuthorized() else { return nil }
-        let timer = ChimeTimer(label: label, duration: duration, autoDismiss: autoDismiss)
+        let timer = ChymeTimer(label: label, duration: duration, autoDismiss: autoDismiss)
         timers.append(timer)
         store.save(timers: timers)
 
@@ -132,7 +132,7 @@ public final class AlarmEngine: ObservableObject {
 
     // MARK: - AlarmKit bridge
 
-    private func reschedule(_ alarm: ChimeAlarm) async {
+    private func reschedule(_ alarm: ChymeAlarm) async {
         await cancelScheduled(id: alarm.id)
         guard alarm.isEnabled, await ensureAuthorized() else { return }
         #if canImport(AlarmKit)
@@ -143,7 +143,7 @@ public final class AlarmEngine: ObservableObject {
         }
     }
 
-    public func nextFireInterval(for alarm: ChimeAlarm,
+    public func nextFireInterval(for alarm: ChymeAlarm,
                                  from now: Date = Date(),
                                  calendar: Calendar = .current) -> TimeInterval? {
         var comps = DateComponents()
@@ -174,7 +174,7 @@ public final class AlarmEngine: ObservableObject {
     }
 
     #if canImport(AlarmKit)
-    private func scheduleCountdown(_ timer: ChimeTimer) async throws {
+    private func scheduleCountdown(_ timer: ChymeTimer) async throws {
         // Countdown-style AlarmKit alarm: fires `duration` from now.
         try await AlarmKitBridge.scheduleCountdown(id: timer.id,
                                                    duration: timer.duration,
@@ -182,7 +182,7 @@ public final class AlarmEngine: ObservableObject {
                                                    sound: timer.soundName)
     }
 
-    private func scheduleSchedule(_ alarm: ChimeAlarm) async throws {
+    private func scheduleSchedule(_ alarm: ChymeAlarm) async throws {
         try await AlarmKitBridge.scheduleFixed(id: alarm.id,
                                                hour: alarm.hour,
                                                minute: alarm.minute,

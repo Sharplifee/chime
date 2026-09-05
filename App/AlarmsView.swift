@@ -2,7 +2,7 @@ import SwiftUI
 
 struct AlarmsView: View {
     @EnvironmentObject var engine: AlarmEngine
-    @State private var editing: ChimeAlarm?
+    @State private var editing: ChymeAlarm?
 
     var body: some View {
         NavigationStack {
@@ -20,7 +20,7 @@ struct AlarmsView: View {
             .navigationTitle("Alarms")
             .toolbar {
                 Button {
-                    editing = ChimeAlarm(minuteOfDay: 7 * 60)
+                    editing = ChymeAlarm(minuteOfDay: 7 * 60)
                 } label: { Image(systemName: "plus") }
             }
             .sheet(item: $editing) { AlarmEditor(alarm: $0) }
@@ -30,7 +30,7 @@ struct AlarmsView: View {
 
 struct AlarmRow: View {
     @EnvironmentObject var engine: AlarmEngine
-    let alarm: ChimeAlarm
+    let alarm: ChymeAlarm
 
     var body: some View {
         HStack {
@@ -56,9 +56,9 @@ struct AlarmRow: View {
 struct AlarmEditor: View {
     @EnvironmentObject var engine: AlarmEngine
     @Environment(\.dismiss) private var dismiss
-    @State var alarm: ChimeAlarm
+    @State var alarm: ChymeAlarm
 
-    init(alarm: ChimeAlarm) { _alarm = State(initialValue: alarm) }
+    init(alarm: ChymeAlarm) { _alarm = State(initialValue: alarm) }
 
     private var time: Binding<Date> {
         Binding(

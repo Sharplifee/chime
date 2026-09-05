@@ -4,12 +4,12 @@ import AppIntents
 #if canImport(AlarmKit)
 import AlarmKit
 
-struct ChimeMetadata: AlarmMetadata {
+struct ChymeMetadata: AlarmMetadata {
     init() {}
 }
 
 /// Stop button on the alerting UI.
-struct ChimeStopIntent: LiveActivityIntent {
+struct ChymeStopIntent: LiveActivityIntent {
     static let title: LocalizedStringResource = "Stop"
     @Parameter(title: "alarmID") var alarmID: String
 
@@ -25,7 +25,7 @@ struct ChimeStopIntent: LiveActivityIntent {
 }
 
 /// Snooze button on the alerting UI.
-struct ChimeSnoozeIntent: LiveActivityIntent {
+struct ChymeSnoozeIntent: LiveActivityIntent {
     static let title: LocalizedStringResource = "Snooze"
     @Parameter(title: "alarmID") var alarmID: String
 
@@ -42,7 +42,7 @@ struct ChimeSnoozeIntent: LiveActivityIntent {
 
 enum AlarmKitBridge {
 
-    private static func attributes(title: String) -> AlarmAttributes<ChimeMetadata> {
+    private static func attributes(title: String) -> AlarmAttributes<ChymeMetadata> {
         let alert = AlarmPresentation.Alert(
             title: LocalizedStringResource(stringLiteral: title),
             stopButton: AlarmButton(text: "Stop", textColor: .white, systemImageName: "stop.circle"),
@@ -59,7 +59,7 @@ enum AlarmKitBridge {
         )
         return AlarmAttributes(
             presentation: AlarmPresentation(alert: alert, countdown: countdown, paused: paused),
-            metadata: ChimeMetadata(),
+            metadata: ChymeMetadata(),
             tintColor: Color.orange
         )
     }
@@ -73,8 +73,8 @@ enum AlarmKitBridge {
             countdownDuration: Alarm.CountdownDuration(preAlert: duration, postAlert: 5 * 60),
             schedule: nil,
             attributes: attributes(title: label),
-            stopIntent: ChimeStopIntent(alarmID: id),
-            secondaryIntent: ChimeSnoozeIntent(alarmID: id),
+            stopIntent: ChymeStopIntent(alarmID: id),
+            secondaryIntent: ChymeSnoozeIntent(alarmID: id),
             sound: .default
         )
         _ = try await AlarmManager.shared.schedule(id: id, configuration: config)
@@ -105,8 +105,8 @@ enum AlarmKitBridge {
                 : nil,
             schedule: schedule,
             attributes: attributes(title: label),
-            stopIntent: ChimeStopIntent(alarmID: id),
-            secondaryIntent: allowSnooze ? ChimeSnoozeIntent(alarmID: id) : nil,
+            stopIntent: ChymeStopIntent(alarmID: id),
+            secondaryIntent: allowSnooze ? ChymeSnoozeIntent(alarmID: id) : nil,
             sound: .default
         )
         _ = try await AlarmManager.shared.schedule(id: id, configuration: config)

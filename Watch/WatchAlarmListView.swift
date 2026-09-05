@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct WatchAlarmListView: View {
-    @State private var alarms: [ChimeAlarm] = ChimeStore().loadAlarms()
+    @State private var alarms: [ChymeAlarm] = ChymeStore().loadAlarms()
 
     var body: some View {
         List {

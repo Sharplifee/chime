@@ -2,8 +2,8 @@ import Foundation
 
 /// Shared persistence via App Group so the widget/complication extension and the
 /// app read the same alarms and timers.
-public struct ChimeStore {
-    public static let appGroup = "group.com.connor.chime"
+public struct ChymeStore {
+    public static let appGroup = "group.com.connor.chyme"
 
     private var defaults: UserDefaults {
         UserDefaults(suiteName: Self.appGroup) ?? .standard
@@ -11,11 +11,11 @@ public struct ChimeStore {
 
     public init() {}
 
-    public func loadAlarms() -> [ChimeAlarm] { decode("alarms") }
-    public func loadTimers() -> [ChimeTimer] { decode("timers") }
+    public func loadAlarms() -> [ChymeAlarm] { decode("alarms") }
+    public func loadTimers() -> [ChymeTimer] { decode("timers") }
 
-    public func save(alarms: [ChimeAlarm]) { encode(alarms, "alarms") }
-    public func save(timers: [ChimeTimer]) { encode(timers, "timers") }
+    public func save(alarms: [ChymeAlarm]) { encode(alarms, "alarms") }
+    public func save(timers: [ChymeTimer]) { encode(timers, "timers") }
 
     /// Duration the watch complication starts by default on a single tap.
     public var defaultComplicationDuration: TimeInterval {

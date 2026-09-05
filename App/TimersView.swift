@@ -3,7 +3,7 @@ import SwiftUI
 struct TimersView: View {
     @EnvironmentObject var engine: AlarmEngine
     @State private var duration: TimeInterval = 300
-    @State private var autoDismiss: AutoDismiss = ChimeStore().defaultAutoDismiss
+    @State private var autoDismiss: AutoDismiss = ChymeStore().defaultAutoDismiss
 
     var body: some View {
         NavigationStack {

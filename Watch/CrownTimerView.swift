@@ -22,7 +22,7 @@ struct CrownTimerView: View {
                 .contentTransition(.numericText())
                 .animation(.snappy, value: selected)
 
-            Text("stops after \(ChimeStore().defaultAutoDismiss.label)")
+            Text("stops after \(ChymeStore().defaultAutoDismiss.label)")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
 
@@ -49,9 +49,9 @@ struct CrownTimerView: View {
 
     private func start() {
         started = true
-        ChimeConnectivity.shared.startTimer(
+        ChymeConnectivity.shared.startTimer(
             duration: selected,
-            autoDismiss: ChimeStore().defaultAutoDismiss.seconds
+            autoDismiss: ChymeStore().defaultAutoDismiss.seconds
         )
         Task {
             try? await Task.sleep(for: .seconds(1))

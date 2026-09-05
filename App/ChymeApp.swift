@@ -1,15 +1,15 @@
 import SwiftUI
 
 @main
-struct ChimeApp: App {
+struct ChymeApp: App {
     @StateObject private var engine = AlarmEngine.shared
 
     init() {
-        _ = ChimeConnectivity.shared
+        _ = ChymeConnectivity.shared
         #if canImport(AlarmKit)
         Task { @MainActor in
             AutoDismissWatcher.shared.start { id in
-                let store = ChimeStore()
+                let store = ChymeStore()
                 if let a = store.loadAlarms().first(where: { $0.id == id }) { return a.autoDismiss }
                 if let t = store.loadTimers().first(where: { $0.id == id }) { return t.autoDismiss }
                 return store.defaultAutoDismiss
