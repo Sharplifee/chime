@@ -76,7 +76,7 @@ struct ChimeTimerComplication: Widget {
 }
 
 @main
-struct ChimeWidgetBundle: WidgetBundle {
+struct ChimeWatchWidgetBundle: WidgetBundle {
     var body: some Widget {
         ChimeTimerComplication()
     }

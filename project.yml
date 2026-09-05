@@ -31,6 +31,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime
+        INFOPLIST_KEY_NSSupportsLiveActivities: YES
         INFOPLIST_KEY_NSAlarmKitUsageDescription: "Chime schedules your alarms and timers so they ring reliably and stop on their own."
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         CODE_SIGN_ENTITLEMENTS: Config/Chime.entitlements
@@ -46,11 +47,26 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Config/ChimeWidgets.entitlements
         PROVISIONING_PROFILE_SPECIFIER: Chime Widgets AppStore
         INFOPLIST_KEY_NSExtensionPointIdentifier: com.apple.widgetkit-extension
+        INFOPLIST_KEY_NSSupportsLiveActivities: YES
+
+  ChimeWatchWidgets:
+    type: app-extension
+    platform: watchOS
+    sources: [WatchWidgets, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.watchkitapp.widgets
+        CODE_SIGN_ENTITLEMENTS: Config/ChimeWatchWidgets.entitlements
+        PROVISIONING_PROFILE_SPECIFIER: Chime Watch Widgets AppStore
+        INFOPLIST_KEY_NSExtensionPointIdentifier: com.apple.widgetkit-extension
 
   ChimeWatch:
     type: application
     platform: watchOS
     sources: [Watch, Shared]
+    dependencies:
+      - target: ChimeWatchWidgets
+        embed: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.watchkitapp
