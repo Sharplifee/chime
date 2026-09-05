@@ -45,17 +45,17 @@ enum AlarmKitBridge {
     private static func attributes(title: String) -> AlarmAttributes<ChimeMetadata> {
         let alert = AlarmPresentation.Alert(
             title: LocalizedStringResource(stringLiteral: title),
-            stopButton: .stopButton,
-            secondaryButton: .snoozeButton,
+            stopButton: AlarmButton(text: "Stop", textColor: .white, systemImageName: "stop.circle"),
+            secondaryButton: AlarmButton(text: "Snooze", textColor: .white, systemImageName: "zzz"),
             secondaryButtonBehavior: .countdown
         )
         let countdown = AlarmPresentation.Countdown(
             title: LocalizedStringResource(stringLiteral: title),
-            pauseButton: .pauseButton
+            pauseButton: AlarmButton(text: "Pause", textColor: .white, systemImageName: "pause.circle")
         )
         let paused = AlarmPresentation.Paused(
             title: "Paused",
-            resumeButton: .resumeButton
+            resumeButton: AlarmButton(text: "Resume", textColor: .white, systemImageName: "play.circle")
         )
         return AlarmAttributes(
             presentation: AlarmPresentation(alert: alert, countdown: countdown, paused: paused),
