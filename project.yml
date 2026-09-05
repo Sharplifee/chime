@@ -1,0 +1,56 @@
+name: Chime
+options:
+  bundleIdPrefix: com.connor
+  deploymentTarget:
+    iOS: "26.0"
+    watchOS: "26.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    DEVELOPMENT_TEAM: XF783932R2
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Manual
+
+targets:
+  Chime:
+    type: application
+    platform: iOS
+    supportedDestinations: [iOS, macCatalyst]
+    sources: [App, Shared]
+    dependencies:
+      - target: ChimeWatch
+        embed: true
+      - target: ChimeWidgets
+        embed: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime
+        INFOPLIST_KEY_NSAlarmKitUsageDescription: "Chime schedules your alarms and timers so they ring reliably and stop on their own."
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        CODE_SIGN_ENTITLEMENTS: Config/Chime.entitlements
+        PROVISIONING_PROFILE_SPECIFIER: Chime AppStore
+
+  ChimeWidgets:
+    type: app-extension
+    platform: iOS
+    sources: [Widgets, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.widgets
+        CODE_SIGN_ENTITLEMENTS: Config/ChimeWidgets.entitlements
+        PROVISIONING_PROFILE_SPECIFIER: Chime Widgets AppStore
+        INFOPLIST_KEY_NSExtensionPointIdentifier: com.apple.widgetkit-extension
+
+  ChimeWatch:
+    type: application.watchapp
+    platform: watchOS
+    sources: [Watch, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.watchkitapp
+        CODE_SIGN_ENTITLEMENTS: Config/ChimeWatch.entitlements
+        PROVISIONING_PROFILE_SPECIFIER: Chime Watch AppStore
+        INFOPLIST_KEY_WKCompanionAppBundleIdentifier: com.connor.chime
