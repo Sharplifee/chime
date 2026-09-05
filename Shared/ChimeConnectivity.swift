@@ -4,7 +4,7 @@ import WatchConnectivity
 /// Watch taps the complication -> message goes to the phone -> phone schedules the
 /// real AlarmKit alarm. The watch never schedules, because AlarmKit has no
 /// watchOS target.
-public final class ChimeConnectivity: NSObject, ObservableObject, WCSessionDelegate {
+public final class ChimeConnectivity: NSObject, ObservableObject, WCSessionDelegate, @unchecked Sendable {
     public static let shared = ChimeConnectivity()
 
     public enum Action: String {
