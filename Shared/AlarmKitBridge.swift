@@ -10,7 +10,7 @@ struct ChimeMetadata: AlarmMetadata {
 
 /// Stop button on the alerting UI.
 struct ChimeStopIntent: LiveActivityIntent {
-    static var title: LocalizedStringResource = "Stop"
+    static let title: LocalizedStringResource = "Stop"
     @Parameter(title: "alarmID") var alarmID: String
 
     init() {}
@@ -26,7 +26,7 @@ struct ChimeStopIntent: LiveActivityIntent {
 
 /// Snooze button on the alerting UI.
 struct ChimeSnoozeIntent: LiveActivityIntent {
-    static var title: LocalizedStringResource = "Snooze"
+    static let title: LocalizedStringResource = "Snooze"
     @Parameter(title: "alarmID") var alarmID: String
 
     init() {}
