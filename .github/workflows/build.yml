@@ -40,4 +40,7 @@ jobs:
             -scheme Chime \
             -destination 'generic/platform=iOS' \
             CODE_SIGNING_ALLOWED=NO \
-            build 2>&1 | tail -80
+            build 2>&1 | tee /tmp/build.log | grep -E "error:|warning:|BUILD" || true
+          echo "--- full error context ---"
+          grep -B2 -A6 "error:" /tmp/build.log | head -120 || true
+          grep -q "BUILD SUCCEEDED" /tmp/build.log

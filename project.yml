@@ -19,7 +19,7 @@ targets:
     type: application
     platform: iOS
     supportedDestinations: [iOS, macCatalyst]
-    sources: [App, Shared]
+    sources: [App, Shared, Engine, Connect, Alarm]
     dependencies:
       - target: ChimeWatch
         embed: true
@@ -40,7 +40,7 @@ targets:
   ChimeWidgets:
     type: app-extension
     platform: iOS
-    sources: [Widgets, Shared]
+    sources: [Widgets, Shared, Alarm]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.connor.chime.widgets
@@ -63,7 +63,7 @@ targets:
   ChimeWatch:
     type: application
     platform: watchOS
-    sources: [Watch, Shared]
+    sources: [Watch, Shared, Connect]
     dependencies:
       - target: ChimeWatchWidgets
         embed: true
