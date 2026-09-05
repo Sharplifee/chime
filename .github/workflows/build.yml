@@ -50,12 +50,16 @@ jobs:
           PROFILE_WIDGETS: ${{ secrets.PROFILE_WIDGETS }}
           PROFILE_WATCH: ${{ secrets.PROFILE_WATCH }}
           PROFILE_WATCH_WIDGETS: ${{ secrets.PROFILE_WATCH_WIDGETS }}
+          AH_APP: ${{ secrets.AH_APP }}
+          AH_WIDGETS: ${{ secrets.AH_WIDGETS }}
+          AH_WATCH: ${{ secrets.AH_WATCH }}
+          AH_WATCH_WIDGETS: ${{ secrets.AH_WATCH_WIDGETS }}
         run: |
           set -e
           DIR=~/Library/MobileDevice/Provisioning\ Profiles
           mkdir -p "$DIR"
           i=0
-          for P in "$PROFILE_APP" "$PROFILE_WIDGETS" "$PROFILE_WATCH" "$PROFILE_WATCH_WIDGETS"; do
+          for P in "$PROFILE_APP" "$PROFILE_WIDGETS" "$PROFILE_WATCH" "$PROFILE_WATCH_WIDGETS" "$AH_APP" "$AH_WIDGETS" "$AH_WATCH" "$AH_WATCH_WIDGETS"; do
             i=$((i+1))
             echo "$P" | base64 -d > "$DIR/chyme_$i.mobileprovision"
           done
@@ -104,6 +108,39 @@ jobs:
             -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist 2>&1 | tee /tmp/export.log | tail -30
           ls -la $RUNNER_TEMP/export
 
+      - name: Export ad hoc IPA (installs without an App Store Connect record)
+        run: |
+          cat > $RUNNER_TEMP/ExportAdHoc.plist <<'PLIST'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>release-testing</string>
+            <key>teamID</key><string>XF783932R2</string>
+            <key>signingStyle</key><string>manual</string>
+            <key>provisioningProfiles</key>
+            <dict>
+              <key>com.connor.chyme</key><string>Chyme AdHoc</string>
+              <key>com.connor.chyme.widgets</key><string>Chyme Widgets AdHoc</string>
+              <key>com.connor.chyme.watchkitapp</key><string>Chyme Watch AdHoc</string>
+              <key>com.connor.chyme.watchkitapp.widgets</key><string>Chyme Watch Widgets AdHoc</string>
+            </dict>
+          </dict>
+          </plist>
+          PLIST
+          set -o pipefail
+          xcodebuild -exportArchive \
+            -archivePath $RUNNER_TEMP/Chyme.xcarchive \
+            -exportPath $RUNNER_TEMP/adhoc \
+            -exportOptionsPlist $RUNNER_TEMP/ExportAdHoc.plist 2>&1 | tail -25
+          ls -la $RUNNER_TEMP/adhoc
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Chyme-adhoc-ipa
+          path: ${{ runner.temp }}/adhoc/*.ipa
+          if-no-files-found: error
+
       - uses: actions/upload-artifact@v4
         with:
           name: Chyme-ipa
@@ -127,6 +164,5 @@ jobs:
           if grep -qi "No errors uploading\|UPLOAD SUCCEEDED" /tmp/upload.log; then
             echo "Upload confirmed"
           else
-            echo "Upload did not confirm — see log above"
-            exit 1
+            echo "TestFlight upload not confirmed (expected until the App Store Connect record exists) — ad hoc IPA is still published above"
           fi
