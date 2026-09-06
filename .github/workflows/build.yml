@@ -67,7 +67,7 @@ jobs:
 
       - name: Resolve build number
         id: bn
-        run: echo "build_number=$(date +%s)" >> $GITHUB_OUTPUT
+        run: echo "build_number=$(( $(date +%s) / 60 ))" >> $GITHUB_OUTPUT
 
       - name: Archive
         run: |

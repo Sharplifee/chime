@@ -25,6 +25,8 @@ targets:
     info:
       path: Config/Chyme-Info.plist
       properties:
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleDisplayName: Chyme
         UILaunchScreen: {}
         NSAlarmKitUsageDescription: "Chyme schedules your alarms and timers so they ring reliably and stop on their own."
@@ -49,6 +51,8 @@ targets:
     info:
       path: Config/ChymeWidgets-Info.plist
       properties:
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleDisplayName: Chyme
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
@@ -65,6 +69,8 @@ targets:
     info:
       path: Config/ChymeWatch-Info.plist
       properties:
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleDisplayName: Chyme
         WKApplication: true
         WKCompanionAppBundleIdentifier: com.connor.chyme
@@ -85,6 +91,8 @@ targets:
     info:
       path: Config/ChymeWatchWidgets-Info.plist
       properties:
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleDisplayName: Chyme
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
